@@ -1,0 +1,87 @@
+/* ==========================
+RESET
+========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background-color: #1f0718;
+    overflow-x: hidden;
+}
+
+
+/* ==========================
+PÁGINA
+========================== */
+
+.advento-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    background-color: #1f0718;
+}
+
+
+/* ==========================
+IMAGEM
+========================== */
+
+.advento-picture {
+    display: block;
+    width: 100%;
+}
+
+.advento-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================
+MOBILE
+========================== */
+
+@media (max-width: 900px) {
+
+    .advento-page {
+        min-height: 100vh;
+    }
+
+    .advento-picture,
+    .advento-image {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================
+TELAS GRANDES
+========================== */
+
+@media (min-width: 1400px) {
+
+    .advento-image {
+        width: 100%;
+        max-width: 1920px;
+    }
+
+}
