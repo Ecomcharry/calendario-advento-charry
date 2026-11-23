@@ -1,68 +1,10 @@
 
-/* ====================================
-   CALENDÁRIO DO ADVENTO CHARRY
-   ==================================== */
-
-:root {
-  --fundo: #eadbdc;
-  --roxo: #471d3d;
-  --rosa-botao: #e3c9d3;
-  --preto: #111111;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  width: 100%;
-}
-
-body {
-  min-height: 100vh;
-  background: var(--fundo);
-  font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
-}
-
-/* PÁGINA */
-
-.pagina-calendario {
-  width: 100%;
-  min-height: 100vh;
-}
-
-.topo-calendario {
-  display: none;
-}
-
-/* CALENDÁRIO */
-
-.calendario {
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-}
+/* Camada sobre a imagem */
 
 .calendario-container {
-  width: 100%;
   position: relative;
-}
-
-.calendario-imagens {
-  display: block;
   width: 100%;
 }
-
-.calendario-img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* CAMADA DOS BOTÕES */
 
 .botoes-calendario {
   position: absolute;
@@ -70,119 +12,44 @@ body {
   pointer-events: none;
 }
 
-/* BOTÃO DESBLOQUEAR */
+/* Botão pequeno e arredondado */
 
 .botao-desbloquear {
   position: absolute;
   transform: translate(-50%, -50%);
 
-  background: var(--rosa-botao);
-  color: var(--roxo);
+  background: #e3c9d3;
+  color: #471d3d;
 
   border: none;
   border-radius: 999px;
 
-  padding: 7px 13px;
+  padding: 6px 12px;
 
-  font-size: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.35px;
+  letter-spacing: 0.2px;
 
-  text-transform: uppercase;
   white-space: nowrap;
-
   cursor: pointer;
   pointer-events: auto;
 
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: background 0.25s, color 0.25s;
 }
-
-/* HOVER */
 
 .botao-desbloquear:hover,
 .botao-desbloquear:focus-visible {
-  background: var(--preto);
+  background: #111111;
   color: #ffffff;
-
-  box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.16);
 }
 
-.botao-desbloquear:focus-visible {
-  outline: 2px solid var(--roxo);
-  outline-offset: 3px;
-}
-
-/* AVISO */
-
-.aviso {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-
-  transform: translate(-50%, 20px);
-
-  padding: 12px 20px;
-
-  background: var(--preto);
-  color: #ffffff;
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  text-align: center;
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: 0.25s ease;
-  z-index: 100;
-}
-
-.aviso.visivel {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* MOBILE */
+/* Mobile */
 
 @media (max-width: 767px) {
-
-  .calendario {
-    max-width: 100%;
-  }
-
-  .calendario-img {
-    width: 100%;
-    height: auto;
-  }
-
   .botao-desbloquear {
+    padding: 5px 7px;
     font-size: 7px;
     letter-spacing: 0;
-    padding: 5px 7px;
-    border-radius: 999px;
   }
-
-  .aviso {
-    width: max-content;
-    max-width: 90%;
-    font-size: 11px;
-  }
-}
-
-/* MODO AJUSTE */
-
-body.modo-ajuste .botao-desbloquear {
-  outline: 1px dashed #471d3d;
-  cursor: move;
-  touch-action: none;
-}
-
-body.modo-ajuste .botao-desbloquear:hover {
-  background: var(--rosa-botao);
-  color: var(--roxo);
 }
