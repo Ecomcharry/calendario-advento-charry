@@ -6,17 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta name="theme-color" content="#eadbdc">
-  <meta name="description" content="Calendário do Advento Charry. Uma surpresa especial a cada dia de dezembro.">
 
   <title>Calendário do Advento | Charry</title>
-
-  <link rel="preload" as="image"
-        href="imagens/desk.png"
-        media="(min-width: 768px)">
-
-  <link rel="preload" as="image"
-        href="imagens/mobile.png"
-        media="(max-width: 767px)">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -25,34 +16,51 @@
 
   <main class="pagina-calendario">
 
-    <!-- Espaço reservado para o conteúdo superior -->
+    <!-- Espaço reservado para conteúdo futuro -->
     <section class="topo-calendario"></section>
 
-    <!-- Calendário responsivo -->
-    <section class="calendario" aria-label="Calendário do Advento Charry">
+    <section
+      class="calendario"
+      aria-label="Calendário do Advento Charry"
+    >
 
-      <picture class="calendario-imagens">
+      <div class="calendario-container">
 
-        <!-- Versão mobile -->
-        <source
-          media="(max-width: 767px)"
-          srcset="imagens/mobile.png"
-        >
+        <!-- Imagens desktop e mobile -->
+        <picture class="calendario-imagens">
 
-        <!-- Versão desktop -->
-        <img
-          id="imagem-calendario"
-          class="calendario-img"
-          src="imagens/desk.png"
-          alt="Calendário do Advento Charry com surpresas de 01 a 24 de dezembro"
-          fetchpriority="high"
-        >
+          <source
+            media="(max-width: 767px)"
+            srcset="imagens/mobile.png"
+          >
 
-      </picture>
+          <img
+            class="calendario-img"
+            src="imagens/desk.png"
+            alt="Calendário do Advento Charry"
+          >
+
+        </picture>
+
+        <!-- Botões posicionados sobre a imagem -->
+        <div
+          id="botoes-calendario"
+          class="botoes-calendario"
+        ></div>
+
+      </div>
 
     </section>
 
   </main>
+
+  <!-- Mensagem de dias ainda fechados -->
+  <div
+    id="aviso"
+    class="aviso"
+    role="status"
+    aria-live="polite"
+  ></div>
 
   <script src="script.js"></script>
 
