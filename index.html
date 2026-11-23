@@ -1,54 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <meta name="theme-color" content="#eadbdc">
+  <meta name="description" content="Calendário do Advento Charry. Uma surpresa especial a cada dia de dezembro.">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <title>Calendário do Advento | Charry</title>
 
-    <title>Calendário do Advento | Charry</title>
+  <link rel="preload" as="image"
+        href="imagens/desk.png"
+        media="(min-width: 768px)">
 
-    <link
-        rel="stylesheet"
-        href="./style.css"
-    >
+  <link rel="preload" as="image"
+        href="imagens/mobile.png"
+        media="(max-width: 767px)">
 
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-    <main class="advento-page">
+  <main class="pagina-calendario">
 
-        <picture class="advento-picture">
+    <!-- Espaço reservado para o conteúdo superior -->
+    <section class="topo-calendario"></section>
 
-            <!-- MOBILE -->
+    <!-- Calendário responsivo -->
+    <section class="calendario" aria-label="Calendário do Advento Charry">
 
-            <source
-                media="(max-width: 900px)"
-                srcset="./advento-mob.png"
-            >
+      <picture class="calendario-imagens">
 
+        <!-- Versão mobile -->
+        <source
+          media="(max-width: 767px)"
+          srcset="imagens/mobile.png"
+        >
 
-            <!-- DESKTOP -->
+        <!-- Versão desktop -->
+        <img
+          id="imagem-calendario"
+          class="calendario-img"
+          src="imagens/desk.png"
+          alt="Calendário do Advento Charry com surpresas de 01 a 24 de dezembro"
+          fetchpriority="high"
+        >
 
-            <img
-                class="advento-image"
-                src="./advento-desk.png"
-                alt="Calendário do Advento Charry"
-            >
+      </picture>
 
-        </picture>
+    </section>
 
-    </main>
+  </main>
 
-
-    <script src="./script.js"></script>
+  <script src="script.js"></script>
 
 </body>
-
 </html>
