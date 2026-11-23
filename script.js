@@ -1,17 +1,24 @@
-"use strict";
 
+// ====================================
+// CHARRY - CALENDÁRIO DO ADVENTO
+// ====================================
 
-/* ==========================
-CALENDÁRIO DO ADVENTO CHARRY
-========================== */
+document.addEventListener("DOMContentLoaded", function () {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+  const imagem = document.getElementById("imagem-calendario");
 
-        console.log(
-            "Calendário do Advento Charry carregado."
-        );
+  if (!imagem) return;
 
-    }
-);
+  // Identifica falhas no carregamento
+  imagem.addEventListener("error", function () {
+    console.error(
+      "Não foi possível carregar a imagem do calendário. Verifique a pasta imagens e os nomes dos arquivos."
+    );
+  });
+
+  // Confirma o carregamento da imagem
+  imagem.addEventListener("load", function () {
+    console.log("Calendário Charry carregado.");
+  });
+
+});
