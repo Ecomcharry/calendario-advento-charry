@@ -5,12 +5,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ELEMENTOS
-
-  const container = document.getElementById(
-    "calendario-container"
-  );
-
   const areaBotoes = document.getElementById(
     "botoes-calendario"
   );
@@ -59,10 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "beneficio-link"
   );
 
-  const painelAjuste = document.getElementById(
-    "painel-ajuste"
-  );
-
   const mediaMobile = window.matchMedia(
     "(max-width: 767px)"
   );
@@ -71,169 +61,122 @@ document.addEventListener("DOMContentLoaded", () => {
   // CONFIGURAÇÃO DOS BENEFÍCIOS
   // ========================================
   //
-  // Não há promoções definidas ainda.
-  // Todas as caixas revelam "EM BREVE".
+  // Nenhum benefício foi cadastrado ainda.
   //
-  // Quando os benefícios forem aprovados,
-  // poderão ser cadastrados aqui.
-  //
-  // Exemplo:
+  // Exemplo futuro:
   //
   // 1: {
   //   titulo: "10% EXTRA",
-  //   descricao: "Benefício exclusivo.",
+  //   descricao: "Benefício exclusivo Charry.",
   //   cupom: "EXEMPLO10",
   //   link: "https://www.exemplo.com.br"
   // }
   //
-  // Não publique cupons reais antes de sua
-  // liberação, pois o JavaScript é público.
+  // Não publique cupons reais antecipadamente
+  // em um repositório público.
 
   const beneficios = {};
 
 
   // ========================================
-  // POSIÇÕES DOS BOTÕES
+  // COORDENADAS DAS IMAGENS
   // ========================================
   //
-  // Coordenadas aproximadas em porcentagem.
-  // [horizontal, vertical]
+  // Medidas nas imagens originais:
   //
-  // As posições podem ser corrigidas
-  // pelo modo de edição.
+  // desk_sem_casinhas.png: 1064 x 1479
+  // mobile_sem_casinhas.png: 941 x 1672
   //
-  // Os nichos decorativos não recebem
-  // botões.
+  // Cada par representa o centro do botão:
+  // [posição horizontal, posição vertical]
+  //
+  // As coordenadas são convertidas para
+  // porcentagens, para acompanhar a imagem
+  // em diferentes larguras de tela.
+  //
+  // Não utilizamos mais posições salvas
+  // no localStorage.
 
-  const POSICOES_INICIAIS = {
+  const LAYOUTS = {
 
     desktop: {
+      largura: 1064,
+      altura: 1479,
 
-      1: [11, 13],
-      2: [27, 13],
-      3: [44, 13],
-      4: [61, 13],
-      5: [78, 13],
-      6: [94, 13],
+      botoes: {
 
-      7: [11, 30],
-      8: [27, 30],
-      9: [78, 30],
-      10: [94, 30],
+        1: [110, 232],
+        2: [279, 232],
+        3: [446, 232],
+        4: [614, 232],
+        5: [781, 232],
+        6: [948, 232],
 
-      11: [36, 47],
-      12: [53, 47],
-      13: [70, 47],
-      14: [87, 47],
+        7: [110, 495],
+        8: [279, 495],
+        9: [781, 495],
+        10: [948, 495],
 
-      15: [11, 64],
-      16: [27, 64],
-      17: [44, 64],
+        11: [390, 766],
+        12: [572, 766],
+        13: [759, 766],
+        14: [942, 766],
 
-      18: [9, 83],
-      19: [23, 83],
-      20: [36, 83],
-      21: [50, 83],
-      22: [64, 83],
-      23: [77, 83],
-      24: [91, 83]
+        15: [118, 1025],
+        16: [302, 1025],
+        17: [496, 1025],
 
+        18: [97, 1281],
+        19: [240, 1281],
+        20: [389, 1281],
+        21: [537, 1281],
+        22: [683, 1281],
+        23: [829, 1281],
+        24: [976, 1281]
+      }
     },
 
     mobile: {
+      largura: 941,
+      altura: 1672,
 
-      1: [26, 9],
-      2: [50, 9],
-      3: [74, 9],
+      botoes: {
 
-      4: [50, 20],
-      5: [74, 20],
+        1: [237, 151],
+        2: [464, 151],
+        3: [692, 151],
 
-      6: [26, 30],
-      7: [50, 30],
-      8: [74, 30],
+        4: [464, 345],
+        5: [692, 345],
 
-      9: [26, 40],
-      10: [50, 40],
+        6: [237, 519],
+        7: [464, 519],
+        8: [692, 519],
 
-      11: [26, 50],
-      12: [50, 50],
-      13: [74, 50],
+        9: [237, 704],
+        10: [464, 704],
 
-      14: [26, 59],
-      15: [74, 59],
+        11: [237, 871],
+        12: [464, 871],
+        13: [692, 871],
 
-      16: [26, 69],
-      17: [50, 69],
-      18: [74, 69],
+        14: [237, 1039],
+        15: [692, 1039],
 
-      19: [26, 79],
-      20: [50, 79],
-      21: [74, 79],
+        16: [237, 1200],
+        17: [464, 1200],
+        18: [692, 1200],
 
-      22: [26, 89],
-      23: [50, 89],
-      24: [74, 89]
+        19: [237, 1369],
+        20: [464, 1369],
+        21: [692, 1369],
 
-    }
-
-  };
-
-
-  // ========================================
-  // EDIÇÃO DAS POSIÇÕES
-  // ========================================
-
-  const parametros = new URLSearchParams(
-    window.location.search
-  );
-
-  const modoAjuste =
-    parametros.get("editar") === "1";
-
-  let posicoesAtuais = {};
-  let dispositivoAtual = "";
-
-  function obterTipo() {
-    return mediaMobile.matches
-      ? "mobile"
-      : "desktop";
-  }
-
-  function copiarObjeto(objeto) {
-    return JSON.parse(JSON.stringify(objeto));
-  }
-
-  function carregarPosicoes(tipo) {
-
-    const chave = "charry-posicoes-" + tipo;
-
-    try {
-
-      const salvas = localStorage.getItem(chave);
-
-      if (salvas) {
-        return {
-          ...copiarObjeto(POSICOES_INICIAIS[tipo]),
-          ...JSON.parse(salvas)
-        };
+        22: [237, 1537],
+        23: [464, 1537],
+        24: [692, 1537]
       }
-
-    } catch (erro) {
-      console.warn("Posições padrão utilizadas.");
     }
-
-    return copiarObjeto(POSICOES_INICIAIS[tipo]);
-  }
-
-  function salvarPosicoes() {
-
-    localStorage.setItem(
-      "charry-posicoes-" + dispositivoAtual,
-      JSON.stringify(posicoesAtuais)
-    );
-
-  }
+  };
 
 
   // ========================================
@@ -244,17 +187,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     areaBotoes.innerHTML = "";
 
-    dispositivoAtual = obterTipo();
+    const tipo = mediaMobile.matches
+      ? "mobile"
+      : "desktop";
 
-    posicoesAtuais = carregarPosicoes(
-      dispositivoAtual
-    );
+    const layout = LAYOUTS[tipo];
 
     for (let dia = 1; dia <= 24; dia++) {
 
-      const coordenadas = posicoesAtuais[dia];
+      const coordenada = layout.botoes[dia];
 
-      if (!coordenadas) continue;
+      if (!coordenada) continue;
+
+      const x = coordenada[0];
+      const y = coordenada[1];
 
       const botao = document.createElement(
         "button"
@@ -266,130 +212,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
       botao.textContent = "DESBLOQUEAR";
 
-      botao.dataset.dia = String(dia);
+      botao.dataset.dia = dia;
 
       botao.setAttribute(
         "aria-label",
-        "Abrir surpresa do dia " + dia
+        `Desbloquear surpresa do dia ${dia} de dezembro`
       );
 
-      botao.style.left = coordenadas[0] + "%";
-      botao.style.top = coordenadas[1] + "%";
+      botao.style.left =
+        (x / layout.largura) * 100 + "%";
 
-      if (modoAjuste) {
+      botao.style.top =
+        (y / layout.altura) * 100 + "%";
 
-        ativarArraste(botao, dia);
-
-      } else {
-
-        botao.addEventListener("click", () => {
-          abrirSurpresa(dia);
-        });
-
-      }
+      botao.addEventListener("click", () => {
+        abrirSurpresa(dia);
+      });
 
       areaBotoes.appendChild(botao);
-
     }
-
   }
 
 
   // ========================================
-  // ARRASTAR OS BOTÕES
-  // ========================================
-
-  function ativarArraste(botao, dia) {
-
-    botao.addEventListener(
-      "pointerdown",
-      evento => {
-
-        evento.preventDefault();
-
-        const ponteiro = evento.pointerId;
-
-        botao.setPointerCapture(ponteiro);
-
-        function mover(e) {
-
-          const rect = container.getBoundingClientRect();
-
-          const x = (
-            (e.clientX - rect.left) /
-            rect.width
-          ) * 100;
-
-          const y = (
-            (e.clientY - rect.top) /
-            rect.height
-          ) * 100;
-
-          const limitar = valor =>
-            Math.max(0, Math.min(100, valor));
-
-          posicoesAtuais[dia] = [
-            limitar(x),
-            limitar(y)
-          ];
-
-          botao.style.left =
-            posicoesAtuais[dia][0] + "%";
-
-          botao.style.top =
-            posicoesAtuais[dia][1] + "%";
-
-        }
-
-        function finalizar() {
-
-          salvarPosicoes();
-
-          botao.removeEventListener(
-            "pointermove",
-            mover
-          );
-
-          botao.removeEventListener(
-            "pointerup",
-            finalizar
-          );
-
-          botao.removeEventListener(
-            "pointercancel",
-            finalizar
-          );
-
-        }
-
-        botao.addEventListener(
-          "pointermove",
-          mover
-        );
-
-        botao.addEventListener(
-          "pointerup",
-          finalizar
-        );
-
-        botao.addEventListener(
-          "pointercancel",
-          finalizar
-        );
-
-      }
-    );
-
-  }
-
-
-  // ========================================
-  // ABRIR MODAL
+  // CONTROLE DA JANELA
   // ========================================
 
   let diaSelecionado = null;
   let temporizador = null;
   let focoAnterior = null;
+
+
+  // ========================================
+  // ABRIR JANELA DA SURPRESA
+  // ========================================
 
   function abrirSurpresa(dia) {
 
@@ -403,28 +259,29 @@ document.addEventListener("DOMContentLoaded", () => {
       " DE DEZEMBRO";
 
     caixa.classList.remove("aberta");
+
     caixa.disabled = false;
 
     resultado.hidden = true;
     areaCupom.hidden = true;
     linkBeneficio.hidden = true;
 
+    codigoCupom.textContent = "";
+    copiarCupom.textContent = "COPIAR";
+
     instrucao.textContent =
       "Toque na caixa para descobrir.";
-
-    copiarCupom.textContent = "COPIAR";
 
     modal.hidden = false;
 
     document.body.style.overflow = "hidden";
 
     caixa.focus();
-
   }
 
 
   // ========================================
-  // REVELAR SURPRESA
+  // REVELAR A SURPRESA
   // ========================================
 
   function revelarSurpresa() {
@@ -434,11 +291,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     caixa.classList.add("aberta");
+
     caixa.disabled = true;
 
     instrucao.textContent = "";
 
     const beneficio = beneficios[diaSelecionado];
+
+    clearTimeout(temporizador);
 
     temporizador = setTimeout(() => {
 
@@ -449,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         titulo.textContent = "EM BREVE";
 
         descricao.textContent =
-          "Estamos preparando uma surpresa especial para você. Volte no dia da revelação!";
+          "Estamos preparando uma surpresa especial para você. Volte em breve para descobrir!";
 
       } else {
 
@@ -465,35 +325,41 @@ document.addEventListener("DOMContentLoaded", () => {
             beneficio.cupom;
 
           areaCupom.hidden = false;
-
         }
 
         if (beneficio.link) {
 
-          const url = beneficio.link;
+          try {
 
-          // Aceita caminhos internos e URLs HTTPS.
-          if (
-            url.startsWith("/") ||
-            url.startsWith("https://")
-          ) {
-            linkBeneficio.href = url;
-            linkBeneficio.hidden = false;
+            const destino = new URL(
+              beneficio.link,
+              window.location.href
+            );
+
+            if (destino.protocol === "https:") {
+
+              linkBeneficio.href = destino.href;
+
+              linkBeneficio.hidden = false;
+            }
+
+          } catch (erro) {
+
+            console.warn(
+              "Link de benefício inválido."
+            );
           }
-
         }
-
       }
 
       resultado.hidden = false;
 
-    }, 900);
-
+    }, 850);
   }
 
 
   // ========================================
-  // FECHAR MODAL
+  // FECHAR JANELA
   // ========================================
 
   function fecharSurpresa() {
@@ -512,18 +378,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       focoAnterior.focus();
     }
-
   }
 
 
   // ========================================
-  // EVENTOS DO MODAL
+  // CLIQUES DA CAIXA
   // ========================================
 
   caixa.addEventListener(
     "click",
     revelarSurpresa
   );
+
+
+  // ========================================
+  // FECHAR AO CLICAR NO X OU FORA
+  // ========================================
 
   document.querySelectorAll("[data-fechar]")
     .forEach(elemento => {
@@ -532,55 +402,57 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         fecharSurpresa
       );
-
     });
 
-  document.addEventListener(
-    "keydown",
-    evento => {
 
-      if (modal.hidden) return;
+  // ========================================
+  // FECHAR COM ESC
+  // E CONTROLAR FOCO DO MODAL
+  // ========================================
 
-      if (evento.key === "Escape") {
-        fecharSurpresa();
-        return;
-      }
+  document.addEventListener("keydown", evento => {
 
-      // Mantém a navegação por teclado
-      // dentro da janela aberta.
-      if (evento.key === "Tab") {
+    if (modal.hidden) return;
 
-        const elementos = Array.from(
-          modal.querySelectorAll(
-            "button:not([disabled]), a:not([hidden])"
-          )
-        ).filter(el =>
-          el.getClientRects().length > 0
-        );
+    if (evento.key === "Escape") {
 
-        if (!elementos.length) return;
+      fecharSurpresa();
 
-        const primeiro = elementos[0];
-        const ultimo = elementos[elementos.length - 1];
-
-        if (
-          evento.shiftKey &&
-          document.activeElement === primeiro
-        ) {
-          evento.preventDefault();
-          ultimo.focus();
-        } else if (
-          !evento.shiftKey &&
-          document.activeElement === ultimo
-        ) {
-          evento.preventDefault();
-          primeiro.focus();
-        }
-
-      }
-
+      return;
     }
-  );
+
+    if (evento.key !== "Tab") return;
+
+    const elementos = Array.from(
+      modal.querySelectorAll(
+        'button:not([disabled]), a:not([hidden])'
+      )
+    ).filter(elemento =>
+      elemento.getClientRects().length > 0
+    );
+
+    if (!elementos.length) return;
+
+    const primeiro = elementos[0];
+    const ultimo = elementos[elementos.length - 1];
+
+    if (
+      evento.shiftKey &&
+      document.activeElement === primeiro
+    ) {
+
+      evento.preventDefault();
+      ultimo.focus();
+
+    } else if (
+      !evento.shiftKey &&
+      document.activeElement === ultimo
+    ) {
+
+      evento.preventDefault();
+      primeiro.focus();
+    }
+  });
 
 
   // ========================================
@@ -591,10 +463,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "click",
     async () => {
 
+      const codigo = codigoCupom.textContent;
+
       try {
 
         await navigator.clipboard.writeText(
-          codigoCupom.textContent
+          codigo
         );
 
         copiarCupom.textContent = "COPIADO!";
@@ -602,85 +476,10 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (erro) {
 
         copiarCupom.textContent =
-          "SELECIONE O CÓDIGO";
-
+          "COPIE O CÓDIGO";
       }
-
     }
   );
-
-
-  // ========================================
-  // PAINEL DE EDIÇÃO
-  // ========================================
-
-  if (modoAjuste) {
-
-    document.body.classList.add(
-      "modo-ajuste"
-    );
-
-    painelAjuste.hidden = false;
-
-    document.getElementById(
-      "exportar-posicoes"
-    ).addEventListener(
-      "click",
-      async () => {
-
-        const dados = {
-          desktop: carregarPosicoes("desktop"),
-          mobile: carregarPosicoes("mobile")
-        };
-
-        const texto = JSON.stringify(
-          dados,
-          null,
-          2
-        );
-
-        try {
-
-          await navigator.clipboard.writeText(
-            texto
-          );
-
-          alert("Posições copiadas!");
-
-        } catch (erro) {
-
-          window.prompt(
-            "Copie as posições:",
-            texto
-          );
-
-        }
-
-      }
-    );
-
-    document.getElementById(
-      "restaurar-posicoes"
-    ).addEventListener(
-      "click",
-      () => {
-
-        const confirmar = confirm(
-          "Restaurar as posições iniciais deste dispositivo?"
-        );
-
-        if (!confirmar) return;
-
-        localStorage.removeItem(
-          "charry-posicoes-" + dispositivoAtual
-        );
-
-        criarBotoes();
-
-      }
-    );
-
-  }
 
 
   // ========================================
@@ -688,6 +487,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========================================
 
   criarBotoes();
+
+  // Recria as posições caso a tela
+  // passe de desktop para mobile ou vice-versa.
 
   mediaMobile.addEventListener(
     "change",
