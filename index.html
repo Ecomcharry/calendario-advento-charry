@@ -3,7 +3,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
 
   <meta name="theme-color" content="#eadbdc">
 
@@ -19,28 +20,28 @@
 
   <main class="pagina-calendario">
 
-    <!-- CALENDÁRIO ORIGINAL -->
     <section class="calendario"
              aria-label="Calendário do Advento Charry">
 
-      <div class="calendario-container"
-           id="calendario-container">
+      <div class="calendario-container">
 
         <picture class="calendario-imagens">
 
+          <!-- MOBILE -->
           <source
             media="(max-width: 767px)"
-            srcset="imagens/mobile.png">
+            srcset="imagens/mobile_sem_casinhas.png">
 
+          <!-- DESKTOP -->
           <img
-            src="imagens/desk.png"
-            alt="Calendário do Advento Charry, de 1 a 24 de dezembro"
+            src="imagens/desk_sem_casinhas.png"
             class="calendario-img"
+            alt="Calendário do Advento Charry com 24 dias"
             id="calendario-img">
 
         </picture>
 
-        <!-- Botões criados pelo JavaScript -->
+        <!-- Botões interativos -->
         <div id="botoes-calendario"
              class="botoes-calendario"></div>
 
@@ -51,7 +52,7 @@
   </main>
 
 
-  <!-- MODAL SURPRESA -->
+  <!-- JANELA DA SURPRESA -->
 
   <div id="surpresa-modal"
        class="surpresa-modal"
@@ -63,87 +64,65 @@
     <section class="surpresa-painel"
              role="dialog"
              aria-modal="true"
-             aria-labelledby="surpresa-titulo"
-             aria-describedby="surpresa-instrucao">
+             aria-labelledby="surpresa-titulo">
 
       <button class="surpresa-fechar"
               type="button"
-              aria-label="Fechar surpresa"
+              aria-label="Fechar"
               data-fechar>
         &times;
       </button>
 
       <div class="surpresa-conteudo">
 
-        <div class="surpresa-topo">
-          <span class="surpresa-marca">
-            CHARRY
-          </span>
+        <p class="surpresa-marca">CHARRY</p>
 
-          <span class="surpresa-linha"></span>
-
-          <span class="surpresa-colecao">
-            ADVENT CALENDAR
-          </span>
-        </div>
-
-        <p id="surpresa-data"
-           class="surpresa-data">
-          01 DE DEZEMBRO
+        <p class="surpresa-submarca">
+          ADVENT CALENDAR
         </p>
 
-        <h2 id="surpresa-titulo"
-            class="surpresa-titulo">
+        <p id="surpresa-data"
+           class="surpresa-data"></p>
+
+        <h2 id="surpresa-titulo">
           UMA SURPRESA PARA VOCÊ
         </h2>
 
-        <p id="surpresa-instrucao"
-           class="surpresa-instrucao">
+        <p id="surpresa-instrucao">
           Toque na caixa para descobrir.
         </p>
 
 
-        <!-- CAIXA INTERATIVA -->
+        <!-- CAIXA ROXA INTERATIVA -->
 
-        <button id="abrir-caixa"
-                class="caixa-interativa"
-                type="button"
-                aria-label="Abrir caixa surpresa">
+        <button
+          id="abrir-caixa"
+          class="caixa-interativa"
+          type="button"
+          aria-label="Abrir caixa surpresa">
 
-          <span class="caixa-cenario">
+          <span class="caixa-sombra"></span>
+          <span class="caixa-brilho"></span>
 
-            <span class="caixa-luz"></span>
+          <span class="caixa-corpo">
+            <span class="caixa-fita"></span>
+            <span class="caixa-logo">CHARRY</span>
+          </span>
 
-            <span class="caixa-sombra"></span>
+          <span class="caixa-tampa">
+            <span class="caixa-fita-tampa"></span>
+          </span>
 
-            <span class="caixa-corpo">
-
-              <span class="caixa-fita-vertical"></span>
-
-              <span class="caixa-logo">
-                CHARRY
-              </span>
-
-            </span>
-
-            <span class="caixa-tampa">
-              <span class="caixa-fita-tampa"></span>
-            </span>
-
-            <span class="caixa-laco">
-              <span class="laco-esquerdo"></span>
-              <span class="laco-direito"></span>
-              <span class="laco-centro"></span>
-            </span>
-
-            <span class="caixa-brilho"></span>
-
+          <span class="caixa-laco">
+            <span class="laco-esquerdo"></span>
+            <span class="laco-direito"></span>
+            <span class="laco-centro"></span>
           </span>
 
         </button>
 
 
-        <!-- RESULTADO DA SURPRESA -->
+        <!-- BENEFÍCIO REVELADO -->
 
         <div id="surpresa-resultado"
              class="surpresa-resultado"
@@ -154,16 +133,12 @@
             SUA SURPRESA
           </p>
 
-          <h3 id="beneficio-titulo">
-            EM BREVE
-          </h3>
+          <h3 id="beneficio-titulo"></h3>
 
-          <p id="beneficio-descricao">
-            Uma surpresa especial está sendo preparada.
-          </p>
+          <p id="beneficio-descricao"></p>
 
 
-          <!-- CUPOM OPCIONAL -->
+          <!-- CUPOM FUTURO -->
 
           <div id="beneficio-cupom"
                class="beneficio-cupom"
@@ -179,15 +154,13 @@
           </div>
 
 
-          <!-- LINK OPCIONAL -->
+          <!-- LINK FUTURO -->
 
           <a id="beneficio-link"
              class="beneficio-link"
              href="#"
              hidden>
-
             CONFERIR SELEÇÃO
-
           </a>
 
         </div>
@@ -195,34 +168,7 @@
       </div>
 
     </section>
-
   </div>
-
-
-  <!-- PAINEL DE AJUSTE DOS BOTÕES -->
-
-  <aside id="painel-ajuste"
-         class="painel-ajuste"
-         hidden>
-
-    <strong>AJUSTAR BOTÕES</strong>
-
-    <p>
-      Arraste cada botão para cima
-      da casinha correspondente.
-    </p>
-
-    <button id="exportar-posicoes"
-            type="button">
-      COPIAR POSIÇÕES
-    </button>
-
-    <button id="restaurar-posicoes"
-            type="button">
-      RESTAURAR
-    </button>
-
-  </aside>
 
 
   <script src="script.js"></script>
